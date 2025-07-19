@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Player;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class PlayerController extends Controller
 {
@@ -26,17 +25,11 @@ class PlayerController extends Controller
             'last_name' => 'required|string|max:255',
             'age' => 'required|integer|min:1|max:150',
             'contact_number' => 'required|string|max:20',
-            'jersey_number' => 'required|integer|min:1|max:999',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'jersey_number' => 'required|integer|min:1|max:999'
         ]);
 
         $data = $request->all();
         
-        if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('players', 'public');
-            $data['photo'] = $photoPath;
-        }
-
         $player = Player::create($data);
 
         if ($request->ajax()) {
@@ -79,21 +72,11 @@ class PlayerController extends Controller
             'last_name' => 'required|string|max:255',
             'age' => 'required|integer|min:1|max:150',
             'contact_number' => 'required|string|max:20',
-            'jersey_number' => 'required|integer|min:1|max:999',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'jersey_number' => 'required|integer|min:1|max:999'
         ]);
 
         $data = $request->all();
         
-        if ($request->hasFile('photo')) {
-            // Delete old photo if exists
-            if ($player->photo && Storage::disk('public')->exists($player->photo)) {
-                Storage::disk('public')->delete($player->photo);
-            }
-            $photoPath = $request->file('photo')->store('players', 'public');
-            $data['photo'] = $photoPath;
-        }
-
         $player->update($data);
 
         if ($request->ajax()) {
@@ -109,11 +92,6 @@ class PlayerController extends Controller
 
     public function destroy(Player $player)
     {
-        // Delete photo if exists
-        if ($player->photo && Storage::disk('public')->exists($player->photo)) {
-            Storage::disk('public')->delete($player->photo);
-        }
-
         $player->delete();
 
         if (request()->ajax()) {

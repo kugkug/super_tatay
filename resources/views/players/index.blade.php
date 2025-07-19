@@ -19,7 +19,6 @@
                     <table class="table table-hover" id="playersTable">
                         <thead class="table-dark">
                             <tr>
-                                <th>Photo</th>
                                 <th>Name</th>
                                 <th>Age</th>
                                 <th>Contact</th>
@@ -30,15 +29,6 @@
                         <tbody>
                             @forelse($players as $player)
                             <tr data-player-id="{{ $player->id }}">
-                                <td>
-                                    @if($player->photo)
-                                        <img src="{{ asset('storage/' . $player->photo) }}" alt="Player Photo" class="player-photo">
-                                    @else
-                                        <div class="player-photo bg-secondary d-flex align-items-center justify-content-center text-white">
-                                            <i class="fas fa-user"></i>
-                                        </div>
-                                    @endif
-                                </td>
                                 <td>{{ $player->full_name }}</td>
                                 <td>{{ $player->age }}</td>
                                 <td>{{ $player->contact_number }}</td>
@@ -114,11 +104,7 @@
                         <label for="contact_number" class="form-label">Contact Number *</label>
                         <input type="text" class="form-control" id="contact_number" name="contact_number" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="photo" class="form-label">Photo</label>
-                        <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
-                        <div class="form-text">Max size: 2MB. Supported formats: JPEG, PNG, JPG, GIF</div>
-                    </div>
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -176,12 +162,6 @@
                         <label for="edit_contact_number" class="form-label">Contact Number *</label>
                         <input type="text" class="form-control" id="edit_contact_number" name="contact_number" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="edit_photo" class="form-label">Photo</label>
-                        <input type="file" class="form-control" id="edit_photo" name="photo" accept="image/*">
-                        <div class="form-text">Max size: 2MB. Supported formats: JPEG, PNG, JPG, GIF</div>
-                        <div id="current_photo_preview" class="mt-2"></div>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -236,12 +216,7 @@ $(document).ready(function() {
                     var newRow = `
                         <tr data-player-id="${response.player.id}">
                             <td>
-                                ${response.player.photo ? 
-                                    `<img src="/storage/${response.player.photo}" alt="Player Photo" class="player-photo">` :
-                                    `<div class="player-photo bg-secondary d-flex align-items-center justify-content-center text-white">
-                                        <i class="fas fa-user"></i>
-                                    </div>`
-                                }
+                                
                             </td>
                             <td>${response.player.first_name} ${response.player.last_name}</td>
                             <td>${response.player.age}</td>
@@ -297,15 +272,7 @@ $(document).ready(function() {
                 $('#edit_contact_number').val(response.player.contact_number);
                 $('#edit_jersey_number').val(response.player.jersey_number);
                 
-                // Show current photo if exists
-                if (response.player.photo) {
-                    $('#current_photo_preview').html(`
-                        <p class="text-muted">Current photo:</p>
-                        <img src="/storage/${response.player.photo}" alt="Current Photo" class="modal-photo">
-                    `);
-                } else {
-                    $('#current_photo_preview').html('<p class="text-muted">No photo uploaded</p>');
-                }
+                
                 
                 $('#editPlayerModal').modal('show');
             }
@@ -332,15 +299,11 @@ $(document).ready(function() {
                 if (response.success) {
                     // Update the row in table
                     var row = $(`tr[data-player-id="${playerId}"]`);
-                    row.find('td:eq(1)').text(response.player.first_name + ' ' + response.player.last_name);
-                    row.find('td:eq(2)').text(response.player.age);
-                    row.find('td:eq(3)').text(response.player.contact_number);
-                    row.find('td:eq(4)').text(response.player.jersey_number);
+                    row.find('td:eq(0)').text(response.player.first_name + ' ' + response.player.last_name);
+                    row.find('td:eq(1)').text(response.player.age);
+                    row.find('td:eq(2)').text(response.player.contact_number);
+                    row.find('td:eq(3)').text(response.player.jersey_number);
                     
-                    // Update photo if changed
-                    if (response.player.photo) {
-                        row.find('td:eq(0)').html(`<img src="/storage/${response.player.photo}" alt="Player Photo" class="player-photo">`);
-                    }
                     
                     showAlert('success', response.message);
                     $('#editPlayerModal').modal('hide');
@@ -366,14 +329,9 @@ $(document).ready(function() {
             type: 'GET',
             success: function(response) {
                 var player = response.player;
-                var photoHtml = player.photo ? 
-                    `<img src="/storage/${player.photo}" alt="Player Photo" class="modal-photo mb-3">` :
-                    '<div class="text-muted mb-3">No photo available</div>';
                 
                 $('#playerDetails').html(`
-                    <div class="text-center mb-3">
-                        ${photoHtml}
-                    </div>
+                    
                     <div class="row">
                         <div class="col-md-6">
                             <p><strong>First Name:</strong> ${player.first_name}</p>
@@ -439,14 +397,9 @@ $(document).ready(function() {
             type: 'GET',
             success: function(response) {
                 var player = response.player;
-                var photoHtml = player.photo ? 
-                    `<img src="/storage/${player.photo}" alt="Player Photo" class="modal-photo mb-3">` :
-                    '<div class="text-muted mb-3">No photo available</div>';
                 
                 $('#playerDetails').html(`
-                    <div class="text-center mb-3">
-                        ${photoHtml}
-                    </div>
+                    
                     <div class="row">
                         <div class="col-md-6">
                             <p><strong>First Name:</strong> ${player.first_name}</p>
@@ -480,15 +433,7 @@ $(document).ready(function() {
                 $('#edit_contact_number').val(response.player.contact_number);
                 $('#edit_jersey_number').val(response.player.jersey_number);
                 
-                // Show current photo if exists
-                if (response.player.photo) {
-                    $('#current_photo_preview').html(`
-                        <p class="text-muted">Current photo:</p>
-                        <img src="/storage/${response.player.photo}" alt="Current Photo" class="modal-photo">
-                    `);
-                } else {
-                    $('#current_photo_preview').html('<p class="text-muted">No photo uploaded</p>');
-                }
+
                 
                 $('#editPlayerModal').modal('show');
             }

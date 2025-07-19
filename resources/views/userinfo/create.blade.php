@@ -60,15 +60,7 @@
                         <input type="text" class="form-control" id="contact_number" name="contact_number" required>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="photo" class="form-label">
-                            <i class="fas fa-camera me-2"></i>Photo
-                        </label>
-                        <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
-                        <div class="form-text">
-                            <i class="fas fa-info-circle me-1"></i>Max size: 2MB. Supported formats: JPEG, PNG, JPG, GIF
-                        </div>
-                    </div>
+                    
 
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-warning btn-lg">
