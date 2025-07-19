@@ -205,7 +205,7 @@ $(document).ready(function() {
         var formData = new FormData(this);
         
         $.ajax({
-            url: '{{ route("players.store") }}',
+            url: '{{ route("players") }}',
             type: 'POST',
             data: formData,
             processData: false,
@@ -215,9 +215,7 @@ $(document).ready(function() {
                     // Add new row to table
                     var newRow = `
                         <tr data-player-id="${response.player.id}">
-                            <td>
-                                
-                            </td>
+                            
                             <td>${response.player.first_name} ${response.player.last_name}</td>
                             <td>${response.player.age}</td>
                             <td>${response.player.contact_number}</td>
@@ -262,7 +260,7 @@ $(document).ready(function() {
         var playerId = $(this).data('player-id');
         
         $.ajax({
-            url: `/players/${playerId}/edit`,
+            url: `/players/${playerId}`,
             type: 'GET',
             success: function(response) {
                 $('#edit_player_id').val(playerId);
@@ -423,7 +421,7 @@ $(document).ready(function() {
         var playerId = $(this).data('player-id');
         
         $.ajax({
-            url: `/players/${playerId}/edit`,
+            url: `/players/${playerId}`,
             type: 'GET',
             success: function(response) {
                 $('#edit_player_id').val(playerId);

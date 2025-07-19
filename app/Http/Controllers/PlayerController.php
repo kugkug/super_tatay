@@ -40,7 +40,7 @@ class PlayerController extends Controller
             ]);
         }
 
-        return redirect()->route('players.index')->with('success', 'Player created successfully!');
+        return redirect()->route('players')->with('success', 'Player created successfully!');
     }
 
     public function show(Player $player)
@@ -87,7 +87,7 @@ class PlayerController extends Controller
             ]);
         }
 
-        return redirect()->route('players.index')->with('success', 'Player updated successfully!');
+        return redirect()->route('players')->with('success', 'Player updated successfully!');
     }
 
     public function destroy(Player $player)
@@ -101,6 +101,6 @@ class PlayerController extends Controller
             ]);
         }
 
-        return redirect()->route('players.index')->with('success', 'Player deleted successfully!');
+        return redirect()->route('players')->with('success', 'Player deleted successfully!');
     }
 }
