@@ -1,15 +1,10 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A complete CRUD (Create, Read, Update, Delete) application with two interfaces:
 
-## About Laravel
+## 1. Player Management System
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+For managing players with the following fields:
 
 -   [Simple, fast routing engine](https://laravel.com/docs/routing).
 -   [Powerful dependency injection container](https://laravel.com/docs/container).
@@ -19,21 +14,37 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 -   [Robust background job processing](https://laravel.com/docs/queues).
 -   [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 2. User Information System
 
-## Learning Laravel
+For users to input their own information with the same fields:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-   First Name
+-   Last Name
+-   Age
+-   Contact Number
+-   Photo (optional)
+-   Jersey Number
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Features
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+-   **Modern UI**: Built with Bootstrap 5 and FontAwesome icons
+-   **jQuery Integration**: All CRUD operations use jQuery AJAX for smooth user experience
+-   **Modal-based Interface**: Create, edit, and view operations use Bootstrap modals
+-   **Photo Upload**: Support for photos with automatic file management
+-   **Responsive Design**: Works on desktop and mobile devices
+-   **Real-time Updates**: Table updates without page refresh
+-   **Form Validation**: Server-side validation with error handling
+-   **Simple Access**: No authentication required - anyone can add and manage information
+-   **Unified Database**: Both systems use the same players table for data storage
 
-## Laravel Sponsors
+## Technology Stack
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+-   **Backend**: Laravel 11
+-   **Frontend**: Bootstrap 5, jQuery 3.7.1, FontAwesome 6
+-   **Database**: MySQL/PostgreSQL (configurable)
+-   **File Storage**: Laravel's public disk for photo uploads
 
-### Premium Partners
+## Installation
 
 -   **[Vehikl](https://vehikl.com)**
 -   **[Tighten Co.](https://tighten.co)**
@@ -44,17 +55,201 @@ We would like to extend our thanks to the following sponsors for funding Laravel
 -   **[Redberry](https://redberry.international/laravel-development)**
 -   **[Active Logic](https://activelogic.com)**
 
-## Contributing
+    ```bash
+    git clone <repository-url>
+    cd super_tatay
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2. **Install dependencies**
 
-## Code of Conduct
+    ```bash
+    composer install
+    npm install
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+3. **Environment setup**
 
-## Security Vulnerabilities
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+4. **Configure database**
+   Edit `.env` file with your database credentials:
+
+    ```
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=your_database_name
+    DB_USERNAME=your_username
+    DB_PASSWORD=your_password
+    ```
+
+5. **Run migrations**
+
+    ```bash
+    php artisan migrate
+    ```
+
+6. **Create storage link**
+
+    ```bash
+    php artisan storage:link
+    ```
+
+7. **Seed sample data (optional)**
+
+    ```bash
+    php artisan db:seed
+    ```
+
+8. **Start the development server**
+    ```bash
+    php artisan serve
+    ```
+
+## Usage
+
+### Accessing the Application
+
+Visit `http://localhost:8000` in your browser. You'll be redirected to the players list page.
+
+### Navigation
+
+-   **Players**: Click "Players" in the navbar to manage players
+-   **User Info**: Click "User Info" in the navbar for users to input their information
+
+### Player Management
+
+1. **View Players**: The main page shows all players in a responsive table
+2. **Add Player**: Click "Add New Player" button to open the create modal
+3. **Edit Player**: Click the edit (pencil) icon to modify player details
+4. **View Details**: Click the view (eye) icon to see player information
+5. **Delete Player**: Click the delete (trash) icon to remove a player
+
+### User Information Management
+
+1. **View Information**: The user info page shows all submitted information
+2. **Add Information**: Click "Add Your Information" button to open the create form
+3. **Edit Information**: Click the edit (pencil) icon to modify details
+4. **View Details**: Click the view (eye) icon to see information
+5. **Delete Information**: Click the delete (trash) icon to remove information
+
+### Features
+
+-   **Photo Upload**: Photos can be uploaded (max 2MB, JPEG/PNG/JPG/GIF)
+-   **Form Validation**: All fields are validated on both client and server side
+-   **AJAX Operations**: All CRUD operations happen without page refresh
+-   **Error Handling**: User-friendly error messages for validation failures
+-   **Success Notifications**: Automatic success messages for all operations
+-   **Public Access**: No login required - anyone can use the system
+-   **Unified Data**: Both systems share the same database table
+
+## File Structure
+
+```
+app/
+├── Http/Controllers/
+│   ├── PlayerController.php    # Player management controller
+│   └── UserInfoController.php  # User information controller
+├── Models/
+│   └── Player.php             # Player model (used by both systems)
+resources/
+├── views/
+│   ├── layouts/
+│   │   └── app.blade.php      # Main layout with Bootstrap/jQuery
+│   ├── players/
+│   │   ├── index.blade.php    # Player management interface
+│   │   ├── create.blade.php   # Create page (redirects to index)
+│   │   ├── edit.blade.php     # Edit page (redirects to index)
+│   │   └── show.blade.php     # Show page (redirects to index)
+│   └── userinfo/
+│       ├── index.blade.php    # User information interface
+│       ├── create.blade.php   # User information form
+│       ├── edit.blade.php     # Edit page (redirects to index)
+│       └── show.blade.php     # Show page (redirects to index)
+database/
+├── migrations/
+│   └── 2025_07_19_041811_create_players_table.php
+└── seeders/
+    ├── DatabaseSeeder.php
+    └── PlayerSeeder.php       # Sample player data
+routes/
+└── web.php                    # Route definitions
+```
+
+## API Endpoints
+
+The application provides RESTful API endpoints for both systems:
+
+### Player Management
+
+-   `GET /players` - List all players
+-   `GET /players/create` - Show create form
+-   `POST /players` - Store new player
+-   `GET /players/{id}` - Show player details
+-   `GET /players/{id}/edit` - Show edit form
+-   `PUT /players/{id}` - Update player
+-   `DELETE /players/{id}` - Delete player
+
+### User Information
+
+-   `GET /userinfo` - List all user information
+-   `GET /userinfo/create` - Show create form
+-   `POST /userinfo` - Store new user information
+-   `GET /userinfo/{id}` - Show user information details
+-   `GET /userinfo/{id}/edit` - Show edit form
+-   `PUT /userinfo/{id}` - Update user information
+-   `DELETE /userinfo/{id}` - Delete user information
+
+All endpoints support both regular HTTP requests and AJAX requests.
+
+## Database Structure
+
+Both systems use the same `players` table with the following structure:
+
+-   `id` - Primary key
+-   `first_name` - First name
+-   `last_name` - Last name
+-   `age` - Age (integer)
+-   `contact_number` - Contact number
+-   `jersey_number` - Jersey number (integer)
+-   `photo` - Photo path (nullable)
+-   `created_at` - Creation timestamp
+-   `updated_at` - Update timestamp
+
+## Customization
+
+### Adding New Fields
+
+1. Update the migration file
+2. Modify the Player model's `$fillable` array
+3. Update both controllers' validation rules
+4. Modify both views to include the new field
+
+### Styling
+
+The application uses Bootstrap 5 with custom CSS. You can modify the styles in:
+
+-   `resources/views/layouts/app.blade.php` (inline styles)
+-   Create a separate CSS file for more complex styling
+
+### Validation Rules
+
+Validation rules are defined in both controllers. You can modify them in the `store()` and `update()` methods.
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Photos not displaying**: Ensure you've run `php artisan storage:link`
+2. **Database errors**: Check your `.env` configuration
+3. **AJAX errors**: Verify CSRF token is properly set
+
+### Debug Mode
+
+For development, ensure `APP_DEBUG=true` in your `.env` file.
 
 ## License
 
